@@ -30,6 +30,10 @@ if(CURSES_FOUND AND FFMPEG_FOUND)
 
   target_link_libraries(slides openlase ${FFMPEG_LIBRARIES} ${CURSES_LIBRARIES})
 
+  if(APPLE)
+    target_link_libraries(slides "-framework CoreFoundation" "-framework VideoDecodeAcceleration" "-framework QuartzCore" bz2 z)
+  endif(APPLE)
+
   function(svg2ild NAME)
     add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.ild
       DEPENDS ${CMAKE_SOURCE_DIR}/tools/svg2ild.py

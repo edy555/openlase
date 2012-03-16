@@ -158,7 +158,6 @@ int	 av_vid_init(char *file)
 		return -1;
 
 	dump_format(pFormatCtx, 0, file, 0);
-
 	videoStream=-1;
 	for (i=0; i<pFormatCtx->nb_streams; i++) {
 		if (pFormatCtx->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO) {
