@@ -131,7 +131,7 @@ int video_open(VContext **octx, char *file)
 	if (av_find_stream_info(ctx->av.formatctx) < 0)
 		goto error;
 
-	dump_format(ctx->av.formatctx, 0, file, 0);
+	av_dump_format(ctx->av.formatctx, 0, file, 0);
 
 	int stream=-1;
 	for (i=0; i<ctx->av.formatctx->nb_streams; i++) {
