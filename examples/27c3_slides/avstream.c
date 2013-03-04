@@ -217,7 +217,7 @@ int audio_open(AContext **octx, char *file)
 
 	ctx->resampler = av_audio_resample_init(2, ctx->av.codecctx->channels,
 										   48000, ctx->av.codecctx->sample_rate,
-										   SAMPLE_FMT_FLT, ctx->av.codecctx->sample_fmt,
+										   AV_SAMPLE_FMT_FLT, ctx->av.codecctx->sample_fmt,
 										   16, 10, 0, 0.8);
 
 	if (!ctx->resampler)
