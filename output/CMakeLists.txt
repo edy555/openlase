@@ -23,6 +23,7 @@ if(QT4_FOUND)
   QT4_WRAP_CPP(output_MOCS output_settings.h)
 
   include_directories(${CMAKE_CURRENT_BINARY_DIR})
+  include_directories (${JACK_INCLUDE_DIR})
 
   add_executable(output output.cpp output_settings.cpp ${output_UIS_H} ${output_MOCS})
   target_link_libraries(output ${JACK_LIBRARIES} ${QT_LIBRARIES})

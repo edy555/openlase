@@ -18,6 +18,7 @@
 
 include_directories (${CMAKE_SOURCE_DIR}/include)
 link_directories (${CMAKE_BINARY_DIR}/libol)
+include_directories (${JACK_INCLUDE_DIR})
 
 add_executable(circlescope circlescope.c)
 target_link_libraries(circlescope ${JACK_LIBRARIES} m)

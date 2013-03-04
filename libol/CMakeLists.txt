@@ -24,10 +24,11 @@ check_function_exists(_aligned_malloc HAVE_ALIGNED_MALLOC)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
 include_directories (${CMAKE_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR})
+include_directories (${JACK_INCLUDE_DIR})
 
 enable_language(ASM_YASM)
 add_library (openlase SHARED libol.c text.c ilda.c trace.c imgproc_sse2.asm ${CMAKE_CURRENT_BINARY_DIR}/fontdef.c)
-target_link_libraries (openlase ${CMAKE_THREAD_LIBS_INIT} m jack)
+target_link_libraries (openlase ${JACK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} m)
 
 add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/fontdef.c
     DEPENDS ${CMAKE_SOURCE_DIR}/tools/genfont.py

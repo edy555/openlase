@@ -18,6 +18,7 @@
 
 include_directories (${CMAKE_SOURCE_DIR}/include)
 link_directories (${CMAKE_BINARY_DIR}/libol)
+include_directories (${JACK_INCLUDE_DIR})
 
 add_executable(playilda playilda.c)
 target_link_libraries(playilda ${JACK_LIBRARIES})
@@ -37,6 +38,7 @@ endif()
 if(OPENGL_FOUND AND GLUT_FOUND)
   add_executable(simulator simulator.c)
   include_directories(${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
+  include_directories (${JACK_INCLUDE_DIR})
   target_link_libraries(simulator m ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${JACK_LIBRARIES})
 else()
   message(STATUS "Will NOT build simulator (OpenGL or GLUT missing)")
