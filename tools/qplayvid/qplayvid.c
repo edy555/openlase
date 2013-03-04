@@ -358,6 +358,7 @@ void hack_release_buffer(struct AVCodecContext *c, AVFrame *pic) {
 int decoder_init(PlayerCtx *ctx, const char *file)
 {
 	int i;
+    AVDictionary *opts = NULL; 
 
 	memset(ctx, 0, sizeof(*ctx));
 
@@ -366,8 +367,8 @@ int decoder_init(PlayerCtx *ctx, const char *file)
 	ctx->cur_seekid = 1;
 	ctx->a_cur_pts = 0;
 
-	if (av_open_input_file(&ctx->fmt_ctx, file, NULL, 0, NULL) != 0)
-		return -1;
+    if(avformat_open_input(&ctx->fmt_ctx, file, NULL, &opts)!=0)
+        return -1;
 
 	if (av_find_stream_info(ctx->fmt_ctx) < 0)
 		return -1;
@@ -427,7 +428,7 @@ int decoder_init(PlayerCtx *ctx, const char *file)
 
 	ctx->a_resampler = av_audio_resample_init(2, ctx->a_codec_ctx->channels,
 							SAMPLE_RATE, ctx->a_codec_ctx->sample_rate,
-							SAMPLE_FMT_S16, ctx->a_codec_ctx->sample_fmt,
+							AV_SAMPLE_FMT_S16, ctx->a_codec_ctx->sample_fmt,
 							16, 10, 0, 0.8);
 	if (!ctx->a_resampler)
 		return -1;

@@ -150,14 +150,15 @@ void moreaudio(float *lb, float *rb, int samples)
 int	 av_vid_init(char *file)
 {
 	int i;
+    AVDictionary *opts = NULL; 
 
-	if (av_open_input_file(&pFormatCtx, file, NULL, 0, NULL)!=0)
-		return -1;
+    if(avformat_open_input(&pFormatCtx, file, NULL, &opts)!=0)
+        return -1;
 
 	if (av_find_stream_info(pFormatCtx)<0)
 		return -1;
 
-	dump_format(pFormatCtx, 0, file, 0);
+	av_dump_format(pFormatCtx, 0, file, 0);
 	videoStream=-1;
 	for (i=0; i<pFormatCtx->nb_streams; i++) {
 		if (pFormatCtx->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO) {
@@ -185,11 +186,12 @@ int	 av_vid_init(char *file)
 int av_aud_init(char *file)
 {
 	int i;
+    AVDictionary *opts = NULL; 
 
 	av_register_all();
 
-	if (av_open_input_file(&pAFormatCtx, file, NULL, 0, NULL)!=0)
-		return -1;
+    if(avformat_open_input(&pAFormatCtx, file, NULL, &opts)!=0)
+        return -1;
 
 	if (av_find_stream_info(pAFormatCtx)<0)
 		return -1;
@@ -215,7 +217,7 @@ int av_aud_init(char *file)
 
 	resampler = av_audio_resample_init(2, pACodecCtx->channels,
 									   48000, pACodecCtx->sample_rate,
-									   SAMPLE_FMT_FLT, pACodecCtx->sample_fmt,
+									   AV_SAMPLE_FMT_FLT, pACodecCtx->sample_fmt,
 									   16, 10, 0, 0.8);
 
 	if (!resampler)
