@@ -30,6 +30,9 @@ enable_language(ASM_YASM)
 add_library (openlase SHARED libol.c text.c ilda.c trace.c imgproc_sse2.asm ${CMAKE_CURRENT_BINARY_DIR}/fontdef.c)
 target_link_libraries (openlase ${JACK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} m)
 
+install (TARGETS openlase RUNTIME DESTINATION bin LIBRARY DESTINATION
+lib ARCHIVE DESTINATION lib)
+
 add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/fontdef.c
     DEPENDS ${CMAKE_SOURCE_DIR}/tools/genfont.py
     MAIN_DEPENDENCY laserfont.svg
