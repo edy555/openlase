@@ -118,13 +118,14 @@ int video_open(VContext **octx, char *file)
 {
 	int i;
 	VContext *ctx;
+    AVDictionary *opts = NULL; 
 
 	if (!inited)
 		avstream_init();
 	
 	ctx = malloc(sizeof(VContext));
 
-	if (av_open_input_file(&ctx->av.formatctx, file, NULL, 0, NULL) != 0)
+    if (avformat_open_input(&ctx->av.formatctx, file, NULL, &opts)!=0)
 		goto error;
 
 	if (av_find_stream_info(ctx->av.formatctx) < 0)
@@ -178,6 +179,7 @@ int audio_open(AContext **octx, char *file)
 {
 	int i;
 	AContext *ctx;
+    AVDictionary *opts = NULL; 
 
 	if (!inited)
 		avstream_init();
@@ -187,13 +189,13 @@ int audio_open(AContext **octx, char *file)
 	ctx->oabuf = malloc(AUDIO_BUF * sizeof(float));
 	ctx->iabuf = malloc(AUDIO_BUF * sizeof(short));
 
-	if (av_open_input_file(&ctx->av.formatctx, file, NULL, 0, NULL) != 0)
+    if (avformat_open_input(&ctx->av.formatctx, file, NULL, &opts) != 0)
 		goto error;
 
 	if (av_find_stream_info(ctx->av.formatctx) < 0)
 		goto error;
 
-	dump_format(ctx->av.formatctx, 0, file, 0);
+	av_dump_format(ctx->av.formatctx, 0, file, 0);
 
 	int stream=-1;
 	for (i=0; i<ctx->av.formatctx->nb_streams; i++) {
