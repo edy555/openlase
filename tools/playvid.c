@@ -60,6 +60,10 @@ is a hack.
 
 #define FRAMES_BUF 8
 
+#ifndef AVCODEC_MAX_AUDIO_FRAME_SIZE
+# define AVCODEC_MAX_AUDIO_FRAME_SIZE 192000
+#endif
+
 #define AUDIO_BUF AVCODEC_MAX_AUDIO_FRAME_SIZE
 
 AVFormatContext        *pFormatCtx = NULL;
